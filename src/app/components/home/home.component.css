@@ -1,0 +1,346 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.spotify-home {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  min-height: 100vh;
+  background: #000;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem 1rem;
+  background: #000;
+}
+
+.brand,
+.nav-link,
+.mood-match-button {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand {
+  padding: 0.25rem 0.75rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+.brand-icon {
+  display: grid;
+  width: 1.7rem;
+  height: 1.7rem;
+  place-items: center;
+  border-radius: 50%;
+  background: #1ed760;
+  color: #000;
+}
+
+.main-nav,
+.library {
+  padding: 1rem 0.75rem;
+  border-radius: 0.5rem;
+  background: #121212;
+}
+
+.main-nav {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.nav-link {
+  color: #b3b3b3;
+  font-weight: 700;
+}
+
+.nav-link span {
+  width: 1.25rem;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #fff;
+}
+
+.library h2,
+.content h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.library p {
+  margin: 0.75rem 0 0;
+  color: #b3b3b3;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.mood-match-button {
+  justify-content: center;
+  margin-top: auto;
+  padding: 0.85rem 1rem;
+  border-radius: 999px;
+  background: #1ed760;
+  color: #000;
+  font-weight: 700;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.mood-match-button:hover {
+  transform: scale(1.02);
+  background: #3be477;
+}
+
+.content {
+  min-width: 0;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  border-radius: 0.5rem;
+  background: linear-gradient(180deg, #263c31 0, #181818 19rem, #121212 38rem);
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+}
+
+.history-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.history-buttons button {
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 45%);
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.history-buttons button:disabled {
+  color: #777;
+}
+
+.profile {
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: #000;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.home-content {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 4rem;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #b3b3b3;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.home-content h1 {
+  margin: 0.6rem 0;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  letter-spacing: -0.05em;
+}
+
+.intro {
+  margin: 0 0 2rem;
+  color: #b3b3b3;
+}
+
+.mood-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(110deg, #1d5b39, #183d2c);
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.mood-card:hover {
+  transform: translateY(-2px);
+  background: #246d43;
+}
+
+.mood-icon {
+  display: grid;
+  width: 4rem;
+  height: 4rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 0.35rem;
+  background: #1ed760;
+  color: #000;
+  font-size: 2rem;
+}
+
+.mood-copy {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.mood-copy strong {
+  font-size: 1.5rem;
+}
+
+.mood-copy > span:last-child {
+  color: #e0e0e0;
+  font-size: 0.9rem;
+}
+
+.play-icon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: 0 0 auto;
+  place-items: center;
+  margin-left: auto;
+  border-radius: 50%;
+  background: #1ed760;
+  color: #000;
+}
+
+.content h2 {
+  margin-bottom: 1rem;
+}
+
+.quick-picks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.quick-pick {
+  display: flex;
+  min-height: 5rem;
+  align-items: center;
+  gap: 0.8rem;
+  overflow: hidden;
+  border-radius: 0.35rem;
+  background: #282828;
+  font-weight: 700;
+}
+
+.tile-icon {
+  display: grid;
+  width: 5rem;
+  min-height: 5rem;
+  flex: 0 0 auto;
+  place-items: center;
+  font-size: 2rem;
+}
+
+.tile-icon.green {
+  background: linear-gradient(135deg, #176b3a, #1ed760);
+}
+
+.tile-icon.purple {
+  background: linear-gradient(135deg, #503a88, #a47ce0);
+}
+
+.tile-icon.orange {
+  background: linear-gradient(135deg, #a94c1c, #edb04c);
+}
+
+@media (max-width: 48rem) {
+  .spotify-home {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .main-nav {
+    display: flex;
+    gap: 1rem;
+    padding: 0;
+    background: transparent;
+  }
+
+  .nav-link {
+    font-size: 0;
+  }
+
+  .nav-link span {
+    font-size: 1.25rem;
+  }
+
+  .library {
+    display: none;
+  }
+
+  .mood-match-button {
+    margin: 0;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.85rem;
+  }
+
+  .content {
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .home-content {
+    padding: 1.5rem 1rem 3rem;
+  }
+}
+
+@media (max-width: 36rem) {
+  .quick-picks {
+    grid-template-columns: 1fr;
+  }
+
+  .mood-card {
+    gap: 0.8rem;
+    padding: 1rem;
+  }
+
+  .mood-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .mood-copy strong {
+    font-size: 1.2rem;
+  }
+
+  .mood-copy > span:last-child {
+    font-size: 0.8rem;
+  }
+
+  .play-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}

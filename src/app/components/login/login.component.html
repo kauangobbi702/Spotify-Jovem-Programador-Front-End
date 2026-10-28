@@ -1,0 +1,34 @@
+<main class="login-page">
+  <section class="login-card" aria-labelledby="login-title">
+    <header class="login-header">
+      <h1 id="login-title">Spotify</h1>
+      <p>Entre para continuar</p>
+    </header>
+
+    <form class="login-form" (ngSubmit)="autenticar()">
+      <label for="usuario">Usuário</label>
+      <input
+        type="text"
+        id="usuario"
+        name="usuario"
+        placeholder="Digite seu usuário"
+        autocomplete="username"
+        required
+        [(ngModel)]="nome"
+      >
+
+      <label for="senha">Senha</label>
+      <input
+        type="password"
+        id="senha"
+        name="senha"
+        placeholder="Digite sua senha"
+        autocomplete="current-password"
+        required
+        [(ngModel)]="senha"
+      >
+
+      <button type="submit">Entrar</button>
+    </form>
+  </section>
+</main>
