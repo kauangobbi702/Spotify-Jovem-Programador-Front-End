@@ -1,0 +1,26 @@
+<div class="tela">
+  <header class="cabecalho">
+    <div>
+      <h1>Mood Match</h1>
+      <small class="passo">Passo 1 de 2</small>
+    </div>
+  </header>
+
+  <p class="intro">Vamos encontrar a trilha sonora perfeita para o seu momento!</p>
+  <h2>Como está o seu humor hoje?</h2>
+
+  <div class="grade">
+    @for (h of mood.humores; track h.id) {
+      <button
+        class="opcao"
+        [class.selecionada]="mood.humor?.id === h.id"
+        (click)="selecionar(h)">
+        <span>{{ h.emoji }}</span> {{ h.label }}
+      </button>
+    }
+  </div>
+
+  <button class="botao-principal" [disabled]="!mood.humor" (click)="proximo()">
+    Próximo
+  </button>
+</div>

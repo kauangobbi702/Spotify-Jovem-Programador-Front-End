@@ -1,0 +1,28 @@
+<div class="tela">
+  <header class="cabecalho">
+    <a class="voltar" routerLink="/atividade">←</a>
+    <h1>Sua Playlist</h1>
+  </header>
+
+  @if (playlist) {
+    <section class="capa">
+      <small class="tag">{{ playlist.subtitulo }}</small>
+      <h2>{{ playlist.titulo }}</h2>
+    </section>
+
+    <ol class="musicas">
+      @for (m of playlist.musicas; track m.id) {
+        <li>
+          <span class="numero">{{ m.id }}</span>
+          <div class="info">
+            <strong>{{ m.titulo }}</strong>
+            <small>{{ m.artista }}</small>
+          </div>
+          <span class="duracao">{{ m.duracao }}</span>
+        </li>
+      }
+    </ol>
+
+    <button class="botao-principal" (click)="recomecar()">Escolher outro mood</button>
+  }
+</div>
