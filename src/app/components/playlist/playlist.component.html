@@ -1,6 +1,7 @@
 <div class="tela">
   <header class="cabecalho">
-    <a class="voltar" routerLink="/atividade">←</a>
+    <a class="voltar" routerLink="/home" aria-label="Voltar para a página inicial">⌂</a>
+    <a class="voltar" routerLink="/atividade" aria-label="Voltar para a escolha de atividade">←</a>
     <h1>Sua Playlist</h1>
   </header>
 
@@ -23,6 +24,17 @@
       }
     </ol>
 
-    <button class="botao-principal" (click)="recomecar()">Escolher outro mood</button>
+    <button class="botao-principal" type="button" (click)="salvarPlaylist()" [disabled]="salvando || playlistSalva">
+      {{ salvando ? 'Salvando...' : playlistSalva ? 'Playlist salva' : 'Salvar playlist' }}
+    </button>
+
+    @if (mensagemSucesso) {
+      <p class="feedback sucesso" role="status">{{ mensagemSucesso }}</p>
+    }
+    @if (mensagemErro) {
+      <p class="feedback erro" role="alert">{{ mensagemErro }}</p>
+    }
+
+    <button class="botao-secundario" type="button" (click)="recomecar()">Escolher outro mood</button>
   }
 </div>

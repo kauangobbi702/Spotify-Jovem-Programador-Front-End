@@ -1,0 +1,29 @@
+.tela .botao-principal {
+	margin-top: 8px;
+}
+
+.botao-secundario {
+	padding: 14px;
+	border: 1px solid #6b6b6b;
+	border-radius: 999px;
+	background: transparent;
+	color: var(--texto);
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.feedback {
+	margin: 0;
+	font-size: 0.9rem;
+	line-height: 1.4;
+	text-align: center;
+}
+
+.sucesso {
+	color: #b7f7cb;
+}
+
+.erro {
+	color: #ffb4ab;
+}

@@ -5,7 +5,7 @@ import { MoodService } from '../../services/mood-match.service';
 @Component({
   selector: 'app-atividade',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './atividade.component.html',
   styleUrl: './atividade.component.css'
 })

@@ -6,15 +6,15 @@
     </header>
 
     <form class="login-form" (ngSubmit)="autenticar()">
-      <label for="usuario">Usuário</label>
+      <label for="email">E-mail</label>
       <input
-        type="text"
-        id="usuario"
-        name="usuario"
-        placeholder="Digite seu usuário"
-        autocomplete="username"
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Digite seu e-mail"
+        autocomplete="email"
         required
-        [(ngModel)]="nome"
+        [(ngModel)]="email"
       >
 
       <label for="senha">Senha</label>
@@ -28,7 +28,13 @@
         [(ngModel)]="senha"
       >
 
-      <button type="submit">Entrar</button>
+      @if (erro) {
+        <p class="login-error" role="alert">{{ erro }}</p>
+      }
+
+      <button type="submit" [disabled]="carregando">
+        {{ carregando ? 'Entrando...' : 'Entrar' }}
+      </button>
     </form>
   </section>
 </main>

@@ -8,18 +8,16 @@ import { Observable } from "rxjs";
 export class AutenticacaoService {
 
     private token: string | null = null;
-    private estaLogado: boolean = false;
 
     constructor(private http: HttpClient) {}
 
-    login(nome: string): Observable<string> {
-        return this.http.post('http://localhost:5184/api/login/auth', { nome }, { responseType: 'text'});
+    login(email: string, senha: string): Observable<{ token: string }> {
+        return this.http.post<{ token: string }>('http://localhost:5184/login/auth', { email, senha });
     }
 
     salvarToken(token: string): void {
         this.token = token;
         localStorage.setItem('token', token);
-        this.estaLogado = true;
     }
 
     retornarToken(): string | null {
@@ -30,6 +28,6 @@ export class AutenticacaoService {
     }
 
     estaAutenticado(): boolean {
-        return this.estaLogado;
+        return this.retornarToken() !== null;
     }
 }

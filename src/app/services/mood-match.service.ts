@@ -1,33 +1,42 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { AutenticacaoService } from './autenticacao.service';
+
+export interface SalvarPlaylistMoodResponse {
+  playlistId: number;
+  nomePlaylist: string;
+  musicasAdicionadas: number;
+}
 
 @Injectable({ providedIn: 'root' })
 export class MoodService {
   humores = [
-    { id: 'animado', label: 'Animado', emoji: '😄' },
-    { id: 'triste', label: 'Triste', emoji: '😢' },
-    { id: 'energetico', label: 'Energético', emoji: '⚡' },
-    { id: 'pensativo', label: 'Pensativo', emoji: '🤔' },
-    { id: 'romantico', label: 'Romântico', emoji: '💕' },
-    { id: 'relaxado', label: 'Relaxado', emoji: '😌' },
-    { id: 'irritado', label: 'Irritado', emoji: '😠' },
-    { id: 'festivo', label: 'Festivo', emoji: '🥳' },
+    { id: 1, label: 'Alegre', emoji: '😄' },
+    { id: 2, label: 'Triste', emoji: '😢' },
+    { id: 3, label: 'Energético', emoji: '⚡' },
+    { id: 4, label: 'Motivado', emoji: '💪' },
+    { id: 5, label: 'Reflexivo', emoji: '🤔' },
+    { id: 6, label: 'Preguiçoso', emoji: '😌' },
+    { id: 7, label: 'Enfurecido', emoji: '😠' },
   ];
 
   atividades = [
-    { id: 'estudando', label: 'Estudando', emoji: '📚' },
-    { id: 'correndo', label: 'Correndo', emoji: '🏃' },
-    { id: 'cozinhando', label: 'Cozinhando', emoji: '🍳' },
-    { id: 'amigos', label: 'Com amigos', emoji: '👫' },
-    { id: 'descansando', label: 'Descansando', emoji: '😴' },
-    { id: 'lendo', label: 'Lendo', emoji: '📖' },
-    { id: 'trabalhando', label: 'Trabalhando', emoji: '💻' },
-    { id: 'dirigindo', label: 'Dirigindo', emoji: '🚗' },
-    { id: 'meditando', label: 'Meditando', emoji: '🧘' },
+    { id: 1, label: 'Caminhando', emoji: '🚶' },
+    { id: 2, label: 'Cozinhando', emoji: '🍳' },
+    { id: 3, label: 'Jogando', emoji: '🎮' },
+    { id: 4, label: 'Estudando', emoji: '📚' },
+    { id: 5, label: 'Relaxando', emoji: '😴' },
+    { id: 6, label: 'Trabalhando', emoji: '💻' },
   ];
 
-  humor: any = null;
-  atividade: any = null;
+  humor: (typeof this.humores)[number] | null = null;
+  atividade: (typeof this.atividades)[number] | null = null;
+
+  constructor(
+    private http: HttpClient,
+    private autenticacao: AutenticacaoService,
+  ) {}
 
   getPlaylist(): Observable<any> {
     return of({
@@ -43,6 +52,25 @@ export class MoodService {
         { id: 7, titulo: 'Dog Days Are Over', artista: 'Florence + The Machine', duracao: '4:12' },
       ],
     });
+  }
+
+  salvarPlaylist(nomePlaylist: string): Observable<SalvarPlaylistMoodResponse> {
+    const token = this.autenticacao.retornarToken();
+    if (!token || !this.humor || !this.atividade) {
+      return throwError(() => new Error('É necessário estar autenticado e escolher um humor e uma atividade.'));
+    }
+
+    return this.http.post<SalvarPlaylistMoodResponse>(
+      'http://localhost:5184/usuario/spotify/criar_playlist_mood',
+      {
+        nomePlaylist,
+        emocaoId: this.humor.id,
+        atividadeId: this.atividade.id,
+      },
+      {
+        headers: new HttpHeaders({ Authorization: `Bearer ${token}` }),
+      },
+    );
   }
 
   reiniciar() {

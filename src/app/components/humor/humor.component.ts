@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MoodService } from '../../services/mood-match.service';
 
 @Component({
   selector: 'app-humor',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './humor.component.html',
   styleUrl: './humor.component.css'
 })
