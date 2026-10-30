@@ -1,0 +1,26 @@
+<div class="tela">
+  <header class="cabecalho">
+    <a class="voltar" routerLink="/humor">←</a>
+    <div>
+      <h1>Mood Match</h1>
+      <small class="passo">Passo 2 de 2</small>
+    </div>
+  </header>
+
+  <h2>Que atividade você está realizando agora?</h2>
+
+  <div class="grade">
+    @for (a of mood.atividades; track a.id) {
+      <button
+        class="opcao"
+        [class.selecionada]="mood.atividade?.id === a.id"
+        (click)="selecionar(a)">
+        <span>{{ a.emoji }}</span> {{ a.label }}
+      </button>
+    }
+  </div>
+
+  <button class="botao-principal" [disabled]="!mood.atividade" (click)="verPlaylist()">
+    Ver minha playlist
+  </button>
+</div>
