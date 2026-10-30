@@ -15,8 +15,8 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.5rem 1rem;
+  gap: 1rem;
+  padding: 1.25rem 0.85rem;
   background: #000;
 }
 
@@ -31,10 +31,15 @@
 }
 
 .brand {
-  padding: 0.25rem 0.75rem;
+  padding: 0.4rem 0.75rem 0.75rem;
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.05em;
+  transition: color 150ms ease;
+}
+
+.brand:hover {
+  color: #1ed760;
 }
 
 .brand-icon {
@@ -49,19 +54,25 @@
 
 .main-nav,
 .library {
-  padding: 1rem 0.75rem;
-  border-radius: 0.5rem;
+  padding: 0.85rem 0.65rem;
+  border: 1px solid rgb(255 255 255 / 4%);
+  border-radius: 0.75rem;
   background: #121212;
 }
 
 .main-nav {
   display: grid;
-  gap: 1.25rem;
+  gap: 0.35rem;
 }
 
 .nav-link {
+  position: relative;
+  min-height: 2.8rem;
+  padding: 0.7rem 0.75rem;
+  border-radius: 0.5rem;
   color: #b3b3b3;
   font-weight: 700;
+  transition: color 150ms ease, background-color 150ms ease;
 }
 
 .nav-link span {
@@ -73,6 +84,30 @@
 .nav-link:hover,
 .nav-link.active {
   color: #fff;
+}
+
+.nav-link:hover {
+  background: #202020;
+}
+
+.nav-link.active {
+  background: #282828;
+}
+
+.nav-link.active span {
+  color: #1ed760;
+}
+
+.nav-link:focus-visible,
+.brand:focus-visible {
+  outline: 2px solid #1ed760;
+  outline-offset: 3px;
+}
+
+.mood-match-button:focus-visible,
+.mood-card:focus-visible {
+  outline: 2px solid #ff4d94;
+  outline-offset: 3px;
 }
 
 .library h2,
@@ -89,19 +124,55 @@
 }
 
 .mood-match-button {
-  justify-content: center;
+  position: relative;
+  justify-content: flex-start;
   margin-top: auto;
-  padding: 0.85rem 1rem;
-  border-radius: 999px;
-  background: #1ed760;
-  color: #000;
-  font-weight: 700;
-  transition: background-color 150ms ease, transform 150ms ease;
+  gap: 0.7rem;
+  padding: 0.8rem 0.75rem;
+  border: 1px solid rgb(255 77 148 / 28%);
+  border-radius: 0.85rem;
+  background: linear-gradient(135deg, #351426, #1e1118);
+  color: #fff;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
 .mood-match-button:hover {
-  transform: scale(1.02);
-  background: #3be477;
+  transform: translateY(-2px);
+  border-color: rgb(255 77 148 / 65%);
+  background: linear-gradient(135deg, #54203b, #351426);
+  box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 25%);
+}
+
+.mood-match-button-icon {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 0.65rem;
+  background: #b91c63;
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+.mood-match-button-copy {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.mood-match-button-copy strong {
+  font-size: 0.9rem;
+}
+
+.mood-match-button-copy small {
+  color: #e9b5ce;
+  font-size: 0.72rem;
+}
+
+.mood-match-button-arrow {
+  margin-left: auto;
+  color: #ff4d94;
+  font-size: 1.2rem;
 }
 
 .content {
@@ -171,33 +242,43 @@
 }
 
 .mood-card {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 1.25rem;
+  overflow: hidden;
   margin-bottom: 2.5rem;
-  padding: 1.25rem;
-  border-radius: 0.5rem;
-  background: linear-gradient(110deg, #1d5b39, #183d2c);
+  padding: 1.5rem;
+  border: 1px solid rgb(255 77 148 / 28%);
+  border-radius: 0.85rem;
+  background: linear-gradient(135deg, #351426, #1e1118);
   color: #fff;
   text-decoration: none;
-  transition: background-color 150ms ease, transform 150ms ease;
+  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 .mood-card:hover {
-  transform: translateY(-2px);
-  background: #246d43;
+  transform: translateY(-3px);
+  border-color: rgb(255 77 148 / 65%);
+  background: linear-gradient(135deg, #54203b, #351426);
+  box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 25%);
 }
 
 .mood-icon {
   display: grid;
-  width: 4rem;
-  height: 4rem;
+  width: 4.5rem;
+  height: 4.5rem;
   flex: 0 0 auto;
   place-items: center;
-  border-radius: 0.35rem;
-  background: #1ed760;
-  color: #000;
+  border-radius: 0.7rem;
+  background: #b91c63;
+  color: #fff;
   font-size: 2rem;
+  box-shadow: 0 0.5rem 1.5rem rgb(185 28 99 / 25%);
+}
+
+.mood-copy .eyebrow {
+  color: #ff4d94;
 }
 
 .mood-copy {
@@ -206,7 +287,8 @@
 }
 
 .mood-copy strong {
-  font-size: 1.5rem;
+  font-size: clamp(1.35rem, 3vw, 1.7rem);
+  letter-spacing: -0.04em;
 }
 
 .mood-copy > span:last-child {
@@ -222,8 +304,16 @@
   place-items: center;
   margin-left: auto;
   border-radius: 50%;
-  background: #1ed760;
-  color: #000;
+  background: #b91c63;
+  color: #fff;
+  font-size: 0.95rem;
+  box-shadow: 0 0.5rem 1.25rem rgb(185 28 99 / 25%);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.mood-card:hover .play-icon {
+  transform: scale(1.08);
+  box-shadow: 0 0.6rem 1.5rem rgb(185 28 99 / 35%);
 }
 
 .content h2 {
@@ -301,9 +391,19 @@
   }
 
   .mood-match-button {
+    gap: 0.5rem;
     margin: 0;
-    padding: 0.65rem 0.85rem;
-    font-size: 0.85rem;
+    padding: 0.5rem 0.6rem;
+  }
+
+  .mood-match-button-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .mood-match-button-copy small,
+  .mood-match-button-arrow {
+    display: none;
   }
 
   .content {
