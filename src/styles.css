@@ -1,1 +1,81 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --fundo: #121212;
+  --card: #1e1e1e;
+  --rosa: #b91c63;
+  --rosa-claro: #ff4d94;
+  --texto: #ffffff;
+  --texto-suave: #a0a0a0;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #0a0a0a;
+  color: var(--texto);
+  font-family: system-ui, sans-serif;
+}
+
+.tela {
+  max-width: 420px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 20px;
+  background: var(--fundo);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cabecalho { display: flex; align-items: center; gap: 12px; }
+.cabecalho h1 { margin: 0; font-size: 1.2rem; }
+.passo { color: #e8501a; display: block; }
+.voltar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #000; color: var(--texto);
+  display: grid; place-items: center; text-decoration: none;
+}
+
+.intro { color: var(--texto-suave); margin: 0; }
+h2 { margin: 8px 0 0; font-size: 1.1rem; }
+
+.grade { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.opcao {
+  background: var(--card);
+  color: var(--texto);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 16px 12px;
+  text-align: left;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.opcao.selecionada { border-color: var(--rosa-claro); color: var(--rosa-claro); }
+
+.botao-principal {
+  margin-top: auto;
+  background: var(--rosa);
+  color: var(--texto);
+  border: 0;
+  border-radius: 999px;
+  padding: 16px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.botao-principal:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Playlist */
+.capa {
+  background: linear-gradient(135deg, #2a1030, #0f3a4a);
+  border-radius: 16px;
+  padding: 48px 16px 16px;
+}
+.capa h2 { margin: 8px 0 0; font-size: 1.6rem; }
+.tag { color: var(--rosa-claro); border: 1px solid var(--rosa-claro); border-radius: 999px; padding: 2px 8px; }
+
+.musicas { list-style: none; margin: 0; padding: 0; }
+.musicas li { display: flex; align-items: center; gap: 12px; padding: 10px 0; }
+.numero { width: 20px; color: var(--texto-suave); }
+.info { flex: 1; display: flex; flex-direction: column; }
+.info small, .duracao { color: var(--texto-suave); }
