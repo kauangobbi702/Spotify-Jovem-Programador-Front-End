@@ -1,0 +1,102 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.login-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 2rem 1rem;
+  background: #121212;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.login-card {
+  width: min(100%, 26rem);
+  padding: 2.5rem;
+  border-radius: 0.75rem;
+  background: #181818;
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 35%);
+}
+
+.login-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.login-header h1 {
+  margin: 0;
+  color: #1ed760;
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+.login-header p {
+  margin: 0.5rem 0 0;
+  color: #b3b3b3;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.login-form label {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.login-form input {
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid #727272;
+  border-radius: 0.25rem;
+  outline: none;
+  background: #121212;
+  color: #fff;
+  font: inherit;
+}
+
+.login-form input:focus {
+  border-color: #1ed760;
+  box-shadow: 0 0 0 1px #1ed760;
+}
+
+.login-form input::placeholder {
+  color: #a7a7a7;
+}
+
+.login-form button {
+  margin-top: 0.75rem;
+  padding: 0.9rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: #1ed760;
+  color: #121212;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.login-form button:hover {
+  transform: scale(1.02);
+  background: #3be477;
+}
+
+.login-form button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 30rem) {
+  .login-card {
+    padding: 2rem 1.5rem;
+  }
+}

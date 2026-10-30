@@ -1,0 +1,71 @@
+<main class="spotify-home">
+  <aside class="sidebar" aria-label="Navegação principal">
+    <a class="brand" routerLink="/" aria-label="Spotify - início">
+      <span class="brand-icon" aria-hidden="true">◉</span>
+      <span>Spotify</span>
+    </a>
+
+    <nav class="main-nav">
+      <a class="nav-link active" routerLink="/">
+        <span aria-hidden="true">⌂</span>
+        Início
+      </a>
+      <a class="nav-link" routerLink="/mood-match">
+        <span aria-hidden="true">⌕</span>
+        Buscar
+      </a>
+    </nav>
+
+    <section class="library">
+      <h2>Sua biblioteca</h2>
+      <p>Suas músicas e playlists favoritas em um só lugar.</p>
+    </section>
+
+    <a class="mood-match-button" routerLink="/mood-match">
+      <span aria-hidden="true">♫</span>
+      Mood Match
+    </a>
+  </aside>
+
+  <section class="content">
+    <header class="top-bar">
+      <div class="history-buttons" aria-label="Navegação">
+        <button type="button" aria-label="Voltar" disabled>‹</button>
+        <button type="button" aria-label="Avançar" disabled>›</button>
+      </div>
+      <span class="profile">Sua música, seu momento</span>
+    </header>
+
+    <div class="home-content">
+      <p class="eyebrow">FEITO PARA VOCÊ</p>
+      <h1>Boa música combina com você.</h1>
+      <p class="intro">Encontre a trilha sonora certa para cada momento.</p>
+
+      <a class="mood-card" routerLink="/mood-match">
+        <span class="mood-icon" aria-hidden="true">♫</span>
+        <span class="mood-copy">
+          <span class="eyebrow">SUA TRILHA, SEU HUMOR</span>
+          <strong>Mood Match</strong>
+          <span>Descubra músicas que combinam com o seu momento.</span>
+        </span>
+        <span class="play-icon" aria-hidden="true">▶</span>
+      </a>
+
+      <h2>Explore sua biblioteca</h2>
+      <div class="quick-picks">
+        <article class="quick-pick">
+          <span class="tile-icon green" aria-hidden="true">♫</span>
+          <span>Suas favoritas</span>
+        </article>
+        <article class="quick-pick">
+          <span class="tile-icon purple" aria-hidden="true">♪</span>
+          <span>Para relaxar</span>
+        </article>
+        <article class="quick-pick">
+          <span class="tile-icon orange" aria-hidden="true">◖</span>
+          <span>Novas descobertas</span>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
