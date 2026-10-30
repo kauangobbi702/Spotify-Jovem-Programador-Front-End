@@ -6,11 +6,16 @@
     </a>
 
     <nav class="main-nav">
-      <a class="nav-link active" routerLink="/home">
+      <a
+        class="nav-link"
+        routerLink="/home"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <span aria-hidden="true">⌂</span>
         Início
       </a>
-      <a class="nav-link" routerLink="/mood-match">
+      <a class="nav-link" routerLink="/mood-match" routerLinkActive="active">
         <span aria-hidden="true">⌕</span>
         Buscar
       </a>
@@ -22,8 +27,12 @@
     </section>
 
     <a class="mood-match-button" routerLink="/mood-match">
-      <span aria-hidden="true">♫</span>
-      Mood Match
+      <span class="mood-match-button-icon" aria-hidden="true">♫</span>
+      <span class="mood-match-button-copy">
+        <strong>Mood Match</strong>
+        <small>Encontre sua vibe</small>
+      </span>
+      <span class="mood-match-button-arrow" aria-hidden="true">→</span>
     </a>
   </aside>
 
@@ -41,7 +50,7 @@
       <h1>Boa música combina com você.</h1>
       <p class="intro">Encontre a trilha sonora certa para cada momento.</p>
 
-      <a class="mood-card" routerLink="/mood-match">
+      <a class="mood-card" routerLink="/mood-match" aria-label="Começar Mood Match">
         <span class="mood-icon" aria-hidden="true">♫</span>
         <span class="mood-copy">
           <span class="eyebrow">SUA TRILHA, SEU HUMOR</span>

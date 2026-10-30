@@ -1,32 +1,40 @@
 <main class="login-page">
   <section class="login-card" aria-labelledby="login-title">
     <header class="login-header">
-      <h1 id="login-title">Spotify</h1>
-      <p>Entre para continuar</p>
+      <div class="brand" aria-label="Spotify">
+        <span class="brand-icon" aria-hidden="true">♫</span>
+        <span>Spotify</span>
+      </div>
+      <h1 id="login-title">Entrar no Spotify</h1>
+      <p class="login-description">Acesse sua conta para continuar.</p>
     </header>
 
     <form class="login-form" (ngSubmit)="autenticar()">
-      <label for="email">E-mail</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="Digite seu e-mail"
-        autocomplete="email"
-        required
-        [(ngModel)]="email"
-      >
+      <div class="form-field">
+        <label for="email">E-mail</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Digite seu e-mail"
+          autocomplete="email"
+          required
+          [(ngModel)]="email"
+        >
+      </div>
 
-      <label for="senha">Senha</label>
-      <input
-        type="password"
-        id="senha"
-        name="senha"
-        placeholder="Digite sua senha"
-        autocomplete="current-password"
-        required
-        [(ngModel)]="senha"
-      >
+      <div class="form-field">
+        <label for="senha">Senha</label>
+        <input
+          type="password"
+          id="senha"
+          name="senha"
+          placeholder="Digite sua senha"
+          autocomplete="current-password"
+          required
+          [(ngModel)]="senha"
+        >
+      </div>
 
       @if (erro) {
         <p class="login-error" role="alert">{{ erro }}</p>
