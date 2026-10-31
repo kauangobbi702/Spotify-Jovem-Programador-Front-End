@@ -96,9 +96,8 @@ export class SpotifyApiService {
   }
 
   descurtirMusica(midiaId: number): Observable<void> {
-    return this.http.post<void>(
-      `${this.baseUrl}/usuario/spotify/descurtir_musica`,
-      { midiaId },
+    return this.http.delete<void>(
+      `${this.baseUrl}/usuario/spotify/descurtir_musica/${midiaId}`,
       { headers: this.cabecalhoAutenticado() },
     );
   }
@@ -119,16 +118,15 @@ export class SpotifyApiService {
 
   seguirArtista(artistaId: number): Observable<void> {
     return this.http.post<void>(
-      `${this.baseUrl}/usuario/spotify/seguir_artista`,
+      `${this.baseUrl}/usuario/spotify/curtir_artista`,
       { artistaId },
       { headers: this.cabecalhoAutenticado() },
     );
   }
 
   deixarDeSeguirArtista(artistaId: number): Observable<void> {
-    return this.http.post<void>(
-      `${this.baseUrl}/usuario/spotify/deixar_de_seguir_artista`,
-      { artistaId },
+    return this.http.delete<void>(
+      `${this.baseUrl}/usuario/spotify/deixar_de_seguir_artista/${artistaId}`,
       { headers: this.cabecalhoAutenticado() },
     );
   }

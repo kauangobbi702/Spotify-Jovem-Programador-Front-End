@@ -25,23 +25,23 @@ describe('SpotifyApiService user actions', () => {
     likeRequest.flush({});
 
     service.descurtirMusica(12).subscribe();
-    const unlikeRequest = http.expectOne('http://localhost:5184/usuario/spotify/descurtir_musica');
-    expect(unlikeRequest.request.method).toBe('POST');
-    expect(unlikeRequest.request.body).toEqual({ midiaId: 12 });
+    const unlikeRequest = http.expectOne('http://localhost:5184/usuario/spotify/descurtir_musica/12');
+    expect(unlikeRequest.request.method).toBe('DELETE');
+    expect(unlikeRequest.request.body).toBeNull();
     unlikeRequest.flush({});
   });
 
   it('sends follow and unfollow requests with the artist id', () => {
     service.seguirArtista(3).subscribe();
-    const followRequest = http.expectOne('http://localhost:5184/usuario/spotify/seguir_artista');
+    const followRequest = http.expectOne('http://localhost:5184/usuario/spotify/curtir_artista');
     expect(followRequest.request.method).toBe('POST');
     expect(followRequest.request.body).toEqual({ artistaId: 3 });
     followRequest.flush({});
 
     service.deixarDeSeguirArtista(3).subscribe();
-    const unfollowRequest = http.expectOne('http://localhost:5184/usuario/spotify/deixar_de_seguir_artista');
-    expect(unfollowRequest.request.method).toBe('POST');
-    expect(unfollowRequest.request.body).toEqual({ artistaId: 3 });
+    const unfollowRequest = http.expectOne('http://localhost:5184/usuario/spotify/deixar_de_seguir_artista/3');
+    expect(unfollowRequest.request.method).toBe('DELETE');
+    expect(unfollowRequest.request.body).toBeNull();
     unfollowRequest.flush({});
   });
 
