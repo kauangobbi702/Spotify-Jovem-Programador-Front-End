@@ -42,7 +42,13 @@
         <button type="button" aria-label="Voltar" disabled>‹</button>
         <button type="button" aria-label="Avançar" disabled>›</button>
       </div>
-      <span class="profile">Sua música, seu momento</span>
+      <div class="profile-actions">
+        <span class="profile">Sua música, seu momento</span>
+        <button class="logout-button" type="button" (click)="sair()" aria-label="Sair da conta">
+          <span aria-hidden="true">↪</span>
+          Sair
+        </button>
+      </div>
     </header>
 
     <div class="home-content">

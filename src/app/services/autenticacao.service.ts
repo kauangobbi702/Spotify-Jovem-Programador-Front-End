@@ -20,6 +20,11 @@ export class AutenticacaoService {
         localStorage.setItem('token', token);
     }
 
+    sair(): void {
+        this.token = null;
+        localStorage.removeItem('token');
+    }
+
     retornarToken(): string | null {
         if (!this.token) {
             this.token = localStorage.getItem('token');

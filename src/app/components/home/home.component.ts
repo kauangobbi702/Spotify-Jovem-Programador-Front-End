@@ -1,7 +1,8 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { catchError, finalize, forkJoin, Observable, of } from 'rxjs';
+import { AutenticacaoService } from '../../services/autenticacao.service';
 import { Album, Artista, Midia, Plano, Playlist, SpotifyApiService } from '../../services/spotify-api.service';
 
 @Component({
@@ -27,7 +28,16 @@ export class HomeComponent implements OnInit {
   erroBiblioteca = '';
   erroDetalhe = '';
 
-  constructor(private spotifyApi: SpotifyApiService) {}
+  constructor(
+    private spotifyApi: SpotifyApiService,
+    private autenticacao: AutenticacaoService,
+    private router: Router,
+  ) {}
+
+  sair(): void {
+    this.autenticacao.sair();
+    void this.router.navigateByUrl('/login');
+  }
 
   ngOnInit(): void {
     forkJoin({
