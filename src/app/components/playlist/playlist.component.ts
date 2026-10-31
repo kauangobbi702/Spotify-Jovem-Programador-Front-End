@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MoodPlaylist, MoodService } from '../../services/mood-match.service';
 import { finalize } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-playlist',
   standalone: true,
-  imports: [RouterLink],
+  imports: [FormsModule, RouterLink],
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.css'
 })
@@ -14,6 +15,7 @@ export class PlaylistComponent implements OnInit {
   playlist: MoodPlaylist | null = null;
   carregandoPlaylist = true;
   erroPlaylist = '';
+  nomePlaylist = '';
   salvando = false;
   playlistSalva = false;
   mensagemSucesso = '';
@@ -31,7 +33,10 @@ export class PlaylistComponent implements OnInit {
     this.mood.getPlaylist()
       .pipe(finalize(() => this.carregandoPlaylist = false))
       .subscribe({
-        next: (resposta) => this.playlist = resposta,
+        next: (resposta) => {
+          this.playlist = resposta;
+          this.nomePlaylist = resposta.titulo;
+        },
         error: (erro) => {
           this.erroPlaylist = erro.status === 401
             ? 'Sua sessão expirou. Entre novamente para buscar músicas.'
@@ -46,7 +51,8 @@ export class PlaylistComponent implements OnInit {
   }
 
   salvarPlaylist(): void {
-    if (!this.playlist || this.salvando || this.playlistSalva) {
+    const nomePlaylist = this.nomePlaylist.trim();
+    if (!this.playlist || !nomePlaylist || this.salvando || this.playlistSalva) {
       return;
     }
 
@@ -54,7 +60,7 @@ export class PlaylistComponent implements OnInit {
     this.mensagemErro = '';
     this.mensagemSucesso = '';
 
-    this.mood.salvarPlaylist(this.playlist.titulo)
+    this.mood.salvarPlaylist(nomePlaylist)
       .pipe(finalize(() => this.salvando = false))
       .subscribe({
         next: (resposta) => {

@@ -32,7 +32,18 @@
       <p class="data-status">O catálogo não tem músicas para esta combinação.</p>
     }
 
-    <button class="botao-principal" type="button" (click)="salvarPlaylist()" [disabled]="salvando || playlistSalva || !playlist.musicas.length">
+    <label class="campo-nome" for="nome-playlist">Nome da playlist</label>
+    <input
+      class="entrada-nome"
+      id="nome-playlist"
+      name="nomePlaylist"
+      type="text"
+      [(ngModel)]="nomePlaylist"
+      [disabled]="salvando || playlistSalva"
+      required
+    >
+
+    <button class="botao-principal" type="button" (click)="salvarPlaylist()" [disabled]="salvando || playlistSalva || !playlist.musicas.length || !nomePlaylist.trim()">
       {{ salvando ? 'Salvando...' : playlistSalva ? 'Playlist salva' : 'Salvar playlist' }}
     </button>
 

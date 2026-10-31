@@ -87,10 +87,50 @@ export class SpotifyApiService {
     });
   }
 
+  curtirMusica(midiaId: number): Observable<void> {
+    return this.http.post<void>(
+      `${this.baseUrl}/usuario/spotify/curtir_musica`,
+      { midiaId },
+      { headers: this.cabecalhoAutenticado() },
+    );
+  }
+
+  descurtirMusica(midiaId: number): Observable<void> {
+    return this.http.post<void>(
+      `${this.baseUrl}/usuario/spotify/descurtir_musica`,
+      { midiaId },
+      { headers: this.cabecalhoAutenticado() },
+    );
+  }
+
   listarPlaylistsDoUsuario(): Observable<Playlist[]> {
     return this.http.get<Playlist[]>(`${this.baseUrl}/usuario/spotify/playlists_usuario`, {
       headers: this.cabecalhoAutenticado(),
     });
+  }
+
+  criarPlaylist(nomePlaylist: string): Observable<Playlist> {
+    return this.http.post<Playlist>(
+      `${this.baseUrl}/usuario/spotify/criar_playlist`,
+      { nomePlaylist },
+      { headers: this.cabecalhoAutenticado() },
+    );
+  }
+
+  seguirArtista(artistaId: number): Observable<void> {
+    return this.http.post<void>(
+      `${this.baseUrl}/usuario/spotify/seguir_artista`,
+      { artistaId },
+      { headers: this.cabecalhoAutenticado() },
+    );
+  }
+
+  deixarDeSeguirArtista(artistaId: number): Observable<void> {
+    return this.http.post<void>(
+      `${this.baseUrl}/usuario/spotify/deixar_de_seguir_artista`,
+      { artistaId },
+      { headers: this.cabecalhoAutenticado() },
+    );
   }
 
   listarMusicasDaPlaylist(playlistId: number): Observable<Midia[]> {
@@ -98,6 +138,14 @@ export class SpotifyApiService {
       headers: this.cabecalhoAutenticado(),
       params: new HttpParams().set('playlistId', playlistId),
     });
+  }
+
+  adicionarMusicaPlaylist(playlistId: number, midiaId: number): Observable<void> {
+    return this.http.post<void>(
+      `${this.baseUrl}/usuario/spotify/adicionar_musica_playlist`,
+      { playlistId, midiaId },
+      { headers: this.cabecalhoAutenticado() },
+    );
   }
 
   listarMusicasDoMood(emocaoId: number, atividadeId: number): Observable<Midia[]> {

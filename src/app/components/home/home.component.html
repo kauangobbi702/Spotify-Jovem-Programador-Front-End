@@ -109,9 +109,17 @@
           <section class="detail-panel" aria-live="polite">
             <div class="section-heading">
               <h3>{{ tituloDetalhe }}</h3>
-              <button class="text-action" type="button" (click)="fecharDetalhe()">
-                Fechar
-              </button>
+              <div class="detail-actions">
+                <button
+                  class="text-action"
+                  type="button"
+                  (click)="alternarSeguimentoArtista()"
+                  [disabled]="seguindoArtista"
+                >
+                  {{ seguindoArtista ? 'Atualizando...' : artistaSeguido(artistaSelecionado) ? 'Deixar de seguir' : 'Seguir artista' }}
+                </button>
+                <button class="text-action" type="button" (click)="fecharDetalhe()">Fechar</button>
+              </div>
             </div>
 
             @if (albunsDoArtista.length) {
@@ -125,21 +133,63 @@
               </div>
             }
 
+            @if (playlists.length) {
+              <label class="playlist-selector">
+                <span>Adicionar músicas à playlist</span>
+                <select [(ngModel)]="playlistSelecionadaId" name="playlistSelecionada">
+                  <option [ngValue]="null">Escolha uma playlist</option>
+                  @for (playlist of playlists; track playlist.idPlaylist) {
+                    <option [ngValue]="playlist.idPlaylist">{{ playlist.nomePlaylist }}</option>
+                  }
+                </select>
+              </label>
+            } @else {
+              <p class="data-status">Crie uma playlist Mood Match para adicionar músicas.</p>
+            }
+
             @if (carregandoDetalhe) {
               <p class="data-status" role="status">Carregando músicas...</p>
             } @else if (erroDetalhe) {
               <p class="data-status error" role="alert">{{ erroDetalhe }}</p>
             } @else if (musicasDetalhe.length) {
-              <ol class="track-list">
+              <ol class="track-list artist-track-list">
                 @for (musica of musicasDetalhe; track musica.idMidia) {
                   <li>
                     <span>{{ musica.titulo }}</span>
                     <small>{{ formatarDuracao(musica.duracao) }}</small>
+                    <div class="track-actions">
+                      <button
+                        class="track-action"
+                        type="button"
+                        (click)="alternarCurtida(musica)"
+                        [disabled]="curtindoMusicas.has(musica.idMidia)"
+                        [attr.aria-pressed]="musicaCurtida(musica)"
+                        [attr.aria-label]="(musicaCurtida(musica) ? 'Descurtir ' : 'Curtir ') + musica.titulo"
+                      >
+                        {{ curtindoMusicas.has(musica.idMidia) ? 'Atualizando...' : musicaCurtida(musica) ? 'Descurtir' : 'Curtir' }}
+                      </button>
+                      <button
+                        class="track-action"
+                        type="button"
+                        (click)="adicionarMusicaAPlaylist(musica)"
+                        [disabled]="playlistSelecionadaId === null || adicionandoMusicas.has(musica.idMidia) || musicaJaAdicionada(musica)"
+                        [attr.aria-label]="'Adicionar ' + musica.titulo + ' à playlist selecionada'"
+                      >
+                        {{ adicionandoMusicas.has(musica.idMidia) ? 'Adicionando...' : musicaJaAdicionada(musica) ? 'Adicionada' : 'Adicionar' }}
+                      </button>
+                    </div>
                   </li>
                 }
               </ol>
             } @else {
               <p class="data-status">Nenhuma música encontrada para este item.</p>
+            }
+
+            @if (mensagemAcao) {
+              <p class="action-feedback success" role="status">{{ mensagemAcao }}</p>
+            }
+            @if (erroAcao) {
+              <p class="action-feedback error" role="alert">{{ erroAcao }}</p>
             }
           </section>
         }
@@ -159,7 +209,46 @@
 
         <div class="library-columns">
           <section class="library-group" aria-labelledby="playlists-title">
-            <h3 id="playlists-title">Playlists</h3>
+            <div class="section-heading">
+              <h3 id="playlists-title">Playlists</h3>
+              <button
+                class="text-action"
+                type="button"
+                (click)="alternarFormularioPlaylist()"
+                [disabled]="criandoPlaylist"
+              >
+                {{ mostrandoFormularioPlaylist ? 'Cancelar' : '+ Criar playlist' }}
+              </button>
+            </div>
+
+            @if (mostrandoFormularioPlaylist) {
+              <form class="create-playlist-form" (ngSubmit)="criarPlaylist()">
+                <label for="nome-nova-playlist">Nome da playlist</label>
+                <input
+                  id="nome-nova-playlist"
+                  name="nomeNovaPlaylist"
+                  type="text"
+                  [(ngModel)]="nomeNovaPlaylist"
+                  [disabled]="criandoPlaylist"
+                  required
+                >
+                <button
+                  class="track-action"
+                  type="submit"
+                  [disabled]="criandoPlaylist || !nomeNovaPlaylist.trim()"
+                >
+                  {{ criandoPlaylist ? 'Criando...' : 'Criar' }}
+                </button>
+              </form>
+            }
+
+            @if (mensagemCriacaoPlaylist) {
+              <p class="action-feedback success" role="status">{{ mensagemCriacaoPlaylist }}</p>
+            }
+            @if (erroCriacaoPlaylist) {
+              <p class="action-feedback error" role="alert">{{ erroCriacaoPlaylist }}</p>
+            }
+
             @if (playlists.length) {
               <div class="saved-list">
                 @for (playlist of playlists; track playlist.idPlaylist) {

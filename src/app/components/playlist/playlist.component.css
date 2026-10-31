@@ -2,6 +2,31 @@
 	margin-top: 8px;
 }
 
+.campo-nome {
+	font-size: 0.9rem;
+	font-weight: 700;
+}
+
+.entrada-nome {
+	width: 100%;
+	padding: 12px 14px;
+	border: 1px solid #6b6b6b;
+	border-radius: 8px;
+	background: #1e1e1e;
+	color: var(--texto);
+	font: inherit;
+}
+
+.entrada-nome:focus {
+	border-color: var(--rosa-claro);
+	outline: 2px solid var(--rosa-claro);
+	outline-offset: 2px;
+}
+
+.entrada-nome:disabled {
+	opacity: 0.6;
+}
+
 .botao-secundario {
 	padding: 14px;
 	border: 1px solid #6b6b6b;
