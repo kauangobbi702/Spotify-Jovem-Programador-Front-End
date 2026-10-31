@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { MoodService } from '../../services/mood-match.service';
+import { MoodPlaylist, MoodService } from '../../services/mood-match.service';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -11,7 +11,9 @@ import { finalize } from 'rxjs';
   styleUrl: './playlist.component.css'
 })
 export class PlaylistComponent implements OnInit {
-  playlist: any = null;
+  playlist: MoodPlaylist | null = null;
+  carregandoPlaylist = true;
+  erroPlaylist = '';
   salvando = false;
   playlistSalva = false;
   mensagemSucesso = '';
@@ -26,9 +28,16 @@ export class PlaylistComponent implements OnInit {
       return;
     }
 
-    this.mood.getPlaylist().subscribe((resposta) => {
-      this.playlist = resposta;
-    });
+    this.mood.getPlaylist()
+      .pipe(finalize(() => this.carregandoPlaylist = false))
+      .subscribe({
+        next: (resposta) => this.playlist = resposta,
+        error: (erro) => {
+          this.erroPlaylist = erro.status === 401
+            ? 'Sua sessão expirou. Entre novamente para buscar músicas.'
+            : 'Não foi possível buscar músicas para esta combinação.';
+        },
+      });
   }
 
   recomecar() {
@@ -52,7 +61,7 @@ export class PlaylistComponent implements OnInit {
           this.playlistSalva = true;
           this.mensagemSucesso = `Playlist salva com ${resposta.musicasAdicionadas} músicas.`;
         },
-        error: (erro) => {
+        error: (erro: { status?: number }) => {
           this.mensagemErro = erro.status === 401
             ? 'Sua sessão expirou. Entre novamente para salvar a playlist.'
             : 'Não foi possível salvar a playlist. Tente novamente.';

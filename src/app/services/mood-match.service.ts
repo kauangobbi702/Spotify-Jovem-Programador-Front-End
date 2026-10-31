@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { AutenticacaoService } from './autenticacao.service';
+import { forkJoin, map, Observable, throwError } from 'rxjs';
+import { SalvarPlaylistMoodResponse, SpotifyApiService } from './spotify-api.service';
 
-export interface SalvarPlaylistMoodResponse {
-  playlistId: number;
-  nomePlaylist: string;
-  musicasAdicionadas: number;
+export interface MoodPlaylistTrack {
+  id: number;
+  titulo: string;
+  artista: string;
+  duracao: string;
+}
+
+export interface MoodPlaylist {
+  titulo: string;
+  subtitulo: string;
+  musicas: MoodPlaylistTrack[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -33,48 +39,52 @@ export class MoodService {
   humor: (typeof this.humores)[number] | null = null;
   atividade: (typeof this.atividades)[number] | null = null;
 
-  constructor(
-    private http: HttpClient,
-    private autenticacao: AutenticacaoService,
-  ) {}
+  constructor(private spotifyApi: SpotifyApiService) {}
 
-  getPlaylist(): Observable<any> {
-    return of({
-      titulo: 'Energia Total 🔥',
-      subtitulo: `${this.humor.emoji} ${this.humor.label} + ${this.atividade.emoji} ${this.atividade.label}`,
-      musicas: [
-        { id: 1, titulo: 'Anunciação - Remix', artista: 'Alceu Valença, Jopin', duracao: '3:42' },
-        { id: 2, titulo: 'Blinding Lights', artista: 'The Weeknd', duracao: '3:20' },
-        { id: 3, titulo: 'Cheguei', artista: 'Ludmilla', duracao: '2:54' },
-        { id: 4, titulo: "Don't Start Now", artista: 'Dua Lipa', duracao: '3:03' },
-        { id: 5, titulo: 'Pesadão', artista: 'IZA, Marcelo Falcão', duracao: '3:43' },
-        { id: 6, titulo: 'Till I Collapse', artista: 'Eminem', duracao: '4:57' },
-        { id: 7, titulo: 'Dog Days Are Over', artista: 'Florence + The Machine', duracao: '4:12' },
-      ],
-    });
+  getPlaylist(): Observable<MoodPlaylist> {
+    if (!this.humor || !this.atividade) {
+      return throwError(() => new Error('Escolha um humor e uma atividade para gerar a playlist.'));
+    }
+
+    const humor = this.humor;
+    const atividade = this.atividade;
+
+    return forkJoin({
+      musicas: this.spotifyApi.listarMusicasDoMood(humor.id, atividade.id),
+      artistas: this.spotifyApi.listarArtistas(),
+    }).pipe(map(({ musicas, artistas }) => ({
+      titulo: `${humor.label} + ${atividade.label}`,
+      subtitulo: `${humor.emoji} ${humor.label} + ${atividade.emoji} ${atividade.label}`,
+      musicas: musicas.map((musica) => ({
+        id: musica.idMidia,
+        titulo: musica.titulo,
+        artista: artistas.find((artista) => artista.idArtista === musica.artistaId)?.nome ?? 'Catálogo Spotify',
+        duracao: this.formatarDuracao(musica.duracao),
+      })),
+    })));
   }
 
   salvarPlaylist(nomePlaylist: string): Observable<SalvarPlaylistMoodResponse> {
-    const token = this.autenticacao.retornarToken();
-    if (!token || !this.humor || !this.atividade) {
+    if (!this.humor || !this.atividade) {
       return throwError(() => new Error('É necessário estar autenticado e escolher um humor e uma atividade.'));
     }
 
-    return this.http.post<SalvarPlaylistMoodResponse>(
-      'http://localhost:5184/usuario/spotify/criar_playlist_mood',
-      {
-        nomePlaylist,
-        emocaoId: this.humor.id,
-        atividadeId: this.atividade.id,
-      },
-      {
-        headers: new HttpHeaders({ Authorization: `Bearer ${token}` }),
-      },
-    );
+    return this.spotifyApi.salvarPlaylistMood(nomePlaylist, this.humor.id, this.atividade.id);
   }
 
   reiniciar() {
     this.humor = null;
     this.atividade = null;
+  }
+
+  private formatarDuracao(duracao: string): string {
+    const [horas, minutos, segundos] = duracao.split(':');
+    if (minutos === undefined || segundos === undefined) {
+      return duracao;
+    }
+
+    const minutosTotais = Number(horas) * 60 + Number(minutos);
+    const segundosInteiros = Number(segundos.split('.')[0]);
+    return `${minutosTotais}:${String(segundosInteiros).padStart(2, '0')}`;
   }
 }

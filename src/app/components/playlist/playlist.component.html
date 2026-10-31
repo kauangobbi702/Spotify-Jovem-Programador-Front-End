@@ -5,26 +5,34 @@
     <h1>Sua Playlist</h1>
   </header>
 
-  @if (playlist) {
+  @if (carregandoPlaylist) {
+    <p class="data-status" role="status">Buscando músicas para o seu mood...</p>
+  } @else if (erroPlaylist) {
+    <p class="feedback erro" role="alert">{{ erroPlaylist }}</p>
+  } @else if (playlist) {
     <section class="capa">
       <small class="tag">{{ playlist.subtitulo }}</small>
       <h2>{{ playlist.titulo }}</h2>
     </section>
 
-    <ol class="musicas">
-      @for (m of playlist.musicas; track m.id) {
-        <li>
-          <span class="numero">{{ m.id }}</span>
-          <div class="info">
-            <strong>{{ m.titulo }}</strong>
-            <small>{{ m.artista }}</small>
-          </div>
-          <span class="duracao">{{ m.duracao }}</span>
-        </li>
-      }
-    </ol>
+    @if (playlist.musicas.length) {
+      <ol class="musicas">
+        @for (m of playlist.musicas; track m.id) {
+          <li>
+            <span class="numero">{{ $index + 1 }}</span>
+            <div class="info">
+              <strong>{{ m.titulo }}</strong>
+              <small>{{ m.artista }}</small>
+            </div>
+            <span class="duracao">{{ m.duracao }}</span>
+          </li>
+        }
+      </ol>
+    } @else {
+      <p class="data-status">O catálogo não tem músicas para esta combinação.</p>
+    }
 
-    <button class="botao-principal" type="button" (click)="salvarPlaylist()" [disabled]="salvando || playlistSalva">
+    <button class="botao-principal" type="button" (click)="salvarPlaylist()" [disabled]="salvando || playlistSalva || !playlist.musicas.length">
       {{ salvando ? 'Salvando...' : playlistSalva ? 'Playlist salva' : 'Salvar playlist' }}
     </button>
 

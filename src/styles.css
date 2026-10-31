@@ -79,3 +79,239 @@ h2 { margin: 8px 0 0; font-size: 1.1rem; }
 .numero { width: 20px; color: var(--texto-suave); }
 .info { flex: 1; display: flex; flex-direction: column; }
 .info small, .duracao { color: var(--texto-suave); }
+
+.home-section {
+  margin-top: 2.5rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section-heading h2,
+.section-heading h3,
+.library-group h3,
+.detail-panel h3 {
+  margin: 0.35rem 0 0;
+}
+
+.section-count,
+.data-status {
+  color: #a7a7a7;
+  font-size: 0.875rem;
+}
+
+.error {
+  color: #ffb4ab;
+}
+
+.entity-grid,
+.plan-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.75rem;
+}
+
+.entity-card,
+.saved-item,
+.album-button {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.8rem;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 0.5rem;
+  background: #202020;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.entity-card {
+  min-height: 4.25rem;
+  padding: 0.7rem;
+}
+
+.entity-card:hover,
+.entity-card.selected,
+.saved-item:hover,
+.album-button:hover {
+  border-color: rgb(30 215 96 / 55%);
+  background: #292929;
+}
+
+.entity-mark,
+.saved-mark {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 0.4rem;
+  background: #163d27;
+  color: #1ed760;
+}
+
+.entity-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.2rem;
+}
+
+.entity-copy strong,
+.entity-copy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.entity-copy small,
+.entity-arrow,
+.album-button small,
+.track-list small {
+  color: #a7a7a7;
+}
+
+.entity-arrow {
+  margin-left: auto;
+  font-size: 1.4rem;
+}
+
+.detail-panel {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border-left: 2px solid #1ed760;
+  background: #161616;
+}
+
+.detail-panel > h3 {
+  margin-top: 0;
+}
+
+.text-action {
+  border: 0;
+  background: transparent;
+  color: #1ed760;
+  cursor: pointer;
+  font: inherit;
+}
+
+.album-list,
+.saved-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.album-list {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  margin: 1rem 0;
+}
+
+.album-button {
+  justify-content: space-between;
+  padding: 0.7rem;
+}
+
+.track-list {
+  display: grid;
+  gap: 0.15rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.track-list li {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 0.5rem;
+  border-bottom: 1px solid rgb(255 255 255 / 7%);
+}
+
+.track-list li span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-list small {
+  flex: 0 0 auto;
+}
+
+.library-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 1rem;
+}
+
+.library-group {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid rgb(255 255 255 / 7%);
+  border-radius: 0.5rem;
+  background: #151515;
+}
+
+.library-group h3 {
+  margin: 0 0 0.8rem;
+  font-size: 1rem;
+}
+
+.saved-item {
+  width: 100%;
+  padding: 0.55rem;
+}
+
+.saved-item span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.saved-mark {
+  width: 2rem;
+  height: 2rem;
+}
+
+.track-list.compact {
+  margin-top: 0;
+}
+
+.plan-item {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 0.5rem;
+  background: #202020;
+}
+
+.plan-item span {
+  color: #1ed760;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@media (max-width: 36rem) {
+  .section-heading {
+    align-items: start;
+  }
+
+  .section-count {
+    padding-top: 0.2rem;
+  }
+
+  .detail-panel {
+    padding: 0.75rem;
+  }
+}

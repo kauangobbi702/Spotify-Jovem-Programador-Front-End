@@ -23,7 +23,7 @@
 
     <section class="library">
       <h2>Sua biblioteca</h2>
-      <p>Suas músicas e playlists favoritas em um só lugar.</p>
+      <p>{{ playlists.length }} playlists · {{ musicasCurtidas.length }} músicas curtidas</p>
     </section>
 
     <a class="mood-match-button" routerLink="/mood-match">
@@ -60,21 +60,193 @@
         <span class="play-icon" aria-hidden="true">▶</span>
       </a>
 
-      <h2>Explore sua biblioteca</h2>
-      <div class="quick-picks">
-        <article class="quick-pick">
-          <span class="tile-icon green" aria-hidden="true">♫</span>
-          <span>Suas favoritas</span>
-        </article>
-        <article class="quick-pick">
-          <span class="tile-icon purple" aria-hidden="true">♪</span>
-          <span>Para relaxar</span>
-        </article>
-        <article class="quick-pick">
-          <span class="tile-icon orange" aria-hidden="true">◖</span>
-          <span>Novas descobertas</span>
-        </article>
-      </div>
+      @if (carregando) {
+        <p class="data-status" role="status">Carregando catálogo e biblioteca...</p>
+      }
+
+      @if (erroCatalogo) {
+        <p class="data-status error" role="alert">{{ erroCatalogo }}</p>
+      }
+
+      <section class="home-section" aria-labelledby="artists-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CATÁLOGO</p>
+            <h2 id="artists-title">Artistas</h2>
+          </div>
+          <span class="section-count">{{ artistas.length }} artistas</span>
+        </div>
+
+        @if (artistas.length) {
+          <div class="entity-grid">
+            @for (artista of artistas; track artista.idArtista) {
+              <button
+                class="entity-card"
+                type="button"
+                [class.selected]="artistaSelecionado?.idArtista === artista.idArtista"
+                (click)="selecionarArtista(artista)"
+              >
+                <span class="entity-mark" aria-hidden="true">♫</span>
+                <span class="entity-copy">
+                  <strong>{{ artista.nome }}</strong>
+                  <small>Ver álbuns e músicas</small>
+                </span>
+                <span class="entity-arrow" aria-hidden="true">›</span>
+              </button>
+            }
+          </div>
+        } @else if (!carregando && !erroCatalogo) {
+          <p class="data-status">Nenhum artista encontrado.</p>
+        }
+
+        @if (artistaSelecionado) {
+          <section class="detail-panel" aria-live="polite">
+            <div class="section-heading">
+              <h3>{{ tituloDetalhe }}</h3>
+              <button class="text-action" type="button" (click)="fecharDetalhe()">
+                Fechar
+              </button>
+            </div>
+
+            @if (albunsDoArtista.length) {
+              <div class="album-list" aria-label="Álbuns do artista">
+                @for (album of albunsDoArtista; track album.idAlbum) {
+                  <button class="album-button" type="button" (click)="selecionarAlbum(album)">
+                    <strong>{{ album.nome }}</strong>
+                    <small>{{ album.anoLancamento || 'Álbum' }}</small>
+                  </button>
+                }
+              </div>
+            }
+
+            @if (carregandoDetalhe) {
+              <p class="data-status" role="status">Carregando músicas...</p>
+            } @else if (erroDetalhe) {
+              <p class="data-status error" role="alert">{{ erroDetalhe }}</p>
+            } @else if (musicasDetalhe.length) {
+              <ol class="track-list">
+                @for (musica of musicasDetalhe; track musica.idMidia) {
+                  <li>
+                    <span>{{ musica.titulo }}</span>
+                    <small>{{ formatarDuracao(musica.duracao) }}</small>
+                  </li>
+                }
+              </ol>
+            } @else {
+              <p class="data-status">Nenhuma música encontrada para este item.</p>
+            }
+          </section>
+        }
+      </section>
+
+      <section class="home-section" aria-labelledby="library-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SUA CONTA</p>
+            <h2 id="library-title">Sua biblioteca</h2>
+          </div>
+        </div>
+
+        @if (erroBiblioteca) {
+          <p class="data-status error" role="alert">{{ erroBiblioteca }}</p>
+        }
+
+        <div class="library-columns">
+          <section class="library-group" aria-labelledby="playlists-title">
+            <h3 id="playlists-title">Playlists</h3>
+            @if (playlists.length) {
+              <div class="saved-list">
+                @for (playlist of playlists; track playlist.idPlaylist) {
+                  <button class="saved-item" type="button" (click)="selecionarPlaylist(playlist)">
+                    <span class="saved-mark" aria-hidden="true">♫</span>
+                    <span>{{ playlist.nomePlaylist }}</span>
+                  </button>
+                }
+              </div>
+            } @else if (!carregando && !erroBiblioteca) {
+              <p class="data-status">Você ainda não salvou playlists.</p>
+            }
+          </section>
+
+          <section class="library-group" aria-labelledby="favorites-title">
+            <h3 id="favorites-title">Músicas curtidas</h3>
+            @if (musicasCurtidas.length) {
+              <ol class="track-list compact">
+                @for (musica of musicasCurtidas; track musica.idMidia) {
+                  <li>
+                    <span>{{ musica.titulo }}</span>
+                    <small>{{ formatarDuracao(musica.duracao) }}</small>
+                  </li>
+                }
+              </ol>
+            } @else if (!carregando && !erroBiblioteca) {
+              <p class="data-status">Nenhuma música curtida ainda.</p>
+            }
+          </section>
+
+          <section class="library-group" aria-labelledby="followed-title">
+            <h3 id="followed-title">Artistas seguidos</h3>
+            @if (artistasSeguidos.length) {
+              <div class="saved-list">
+                @for (artista of artistasSeguidos; track artista.idArtista) {
+                  <button class="saved-item" type="button" (click)="selecionarArtista(artista)">
+                    <span class="saved-mark" aria-hidden="true">♫</span>
+                    <span>{{ artista.nome }}</span>
+                  </button>
+                }
+              </div>
+            } @else if (!carregando && !erroBiblioteca) {
+              <p class="data-status">Você ainda não segue artistas.</p>
+            }
+          </section>
+        </div>
+
+        @if (tituloDetalhe && !artistaSelecionado) {
+          <section class="detail-panel" aria-live="polite">
+            <div class="section-heading">
+              <h3>{{ tituloDetalhe }}</h3>
+              <button class="text-action" type="button" (click)="fecharDetalhe()">Fechar</button>
+            </div>
+            @if (carregandoDetalhe) {
+              <p class="data-status" role="status">Carregando músicas...</p>
+            } @else if (erroDetalhe) {
+              <p class="data-status error" role="alert">{{ erroDetalhe }}</p>
+            } @else if (musicasDetalhe.length) {
+              <ol class="track-list">
+                @for (musica of musicasDetalhe; track musica.idMidia) {
+                  <li>
+                    <span>{{ musica.titulo }}</span>
+                    <small>{{ formatarDuracao(musica.duracao) }}</small>
+                  </li>
+                }
+              </ol>
+            } @else {
+              <p class="data-status">Nenhuma música encontrada.</p>
+            }
+          </section>
+        }
+      </section>
+
+      <section class="home-section" aria-labelledby="plans-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SPOTIFY</p>
+            <h2 id="plans-title">Planos disponíveis</h2>
+          </div>
+        </div>
+        @if (planos.length) {
+          <div class="plan-list">
+            @for (plano of planos; track plano.idPlano) {
+              <article class="plan-item">
+                <strong>{{ plano.descricao }}</strong>
+                <span>{{ plano.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+              </article>
+            }
+          </div>
+        } @else if (!carregando && !erroCatalogo) {
+          <p class="data-status">Nenhum plano disponível.</p>
+        }
+      </section>
     </div>
   </section>
 </main>
